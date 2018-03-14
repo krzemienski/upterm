@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,24 +8,19 @@
         * {
             box-sizing: border-box;
         }
-
         ::-webkit-scrollbar {
             display: none;
         }
-
         html {
             -webkit-backface-visibility: hidden;
         }
-
         body {
             margin: 0;
         }
-
         @font-face {
             font-family: "FontAwesome";
             src: url(../../../node_modules/font-awesome/fonts/fontawesome-webfont.ttf) format("truetype");
         }
-
         @keyframes progress-bar-stripes {
             from {
                 background-position: 0 0;
@@ -33,7 +29,6 @@
                 background-position: 30px 0;
             }
         }
-
         .application {
             display: grid;
             grid-template-areas: "title-bar" "tab";
@@ -41,26 +36,20 @@
             font-family: var(--font-family);
             background-color: var(--background-color);
             color: var(--text-color);
-
             --title-bar-height: 24px;
             --footer-height: calc(var(--font-size) * 2);
             --prompt-height: calc(var(--font-size) * 3);
             --session-height: calc(100vh - var(--title-bar-height));
             --prompt-font-size: calc(var(--font-size) + 2px);
         }
-
         .title-bar {
             grid-area: title-bar;
             height: var(--title-bar-height);
             -webkit-app-region: drag;
         }
-
         .title-bar .search {
-            position: absolute;
-            right: 4px;
-            top: 2px;
+            margin-top: 3px;
         }
-
         .title-bar .search .search-icon {
             position: relative;
             left: var(--font-size);
@@ -68,9 +57,9 @@
             font-size: calc(var(--font-size) - 4px);
             font-family: FontAwesome;
         }
-
         .title-bar .search .search-input {
             --search-input-height: calc(var(--title-bar-height) - 6px);
+            -webkit-app-region: no-drag;
             font-size: var(--font-size);
             background-color: var(--search-input-color);
             border: 0;
@@ -82,7 +71,24 @@
             padding-left: var(--font-size);
             color: var(--white-color);
         }
-
+        .title-bar .navButtons {
+            -webkit-app-region: no-drag;
+            position: absolute;
+            right: 4px;
+            top: 2px;
+        }
+        .title-bar .navButtons button {
+            position: relative;
+            height: 24px;
+            width: 29px;
+            background-color: transparent;
+            border: none;
+            color: #F1F1F1;
+            font-size: 17px;
+        }
+        .title-bar .navButtons button:hover {
+            background-color: #3F3F41;
+        }
         .title-bar .tabs {
             justify-content: center;
             display: flex;
@@ -94,7 +100,6 @@
             padding-left: 68px;
             padding-right: 129px;
         }
-
         .tab-header {
             opacity: 0.3;
             position: relative;
@@ -105,44 +110,34 @@
             text-align: center;
             padding-top: 2px;
         }
-
         .tab-header[data-focused=true] {
             opacity: 1;
         }
-
         .tab-header:hover {
             background-color: var(--black-color);
             opacity: 1;
         }
-
         .tab-header .close-button {
             color: transparent;
-
             --margin: calc(var(--title-bar-height) - var(--font-size));
-
             font-family: FontAwesome;
             position: absolute;
             left: var(--margin);
             top: calc(var(--margin) / 2);
             cursor: pointer;
         }
-
         .tab-header:hover .close-button {
             color: var(--white-color);
         }
-
         .tab-header:hover .close-button:hover {
             color: var(--red-color);
         }
-
         .tab {
             grid-area: tab;
         }
-
         .tab[data-focused=false] {
             display: none;
         }
-
         .sessions {
             grid-area: tab;
             display: grid;
@@ -150,17 +145,14 @@
             height: var(--session-height);
             border-left: var(--background-color);
         }
-
         .sessions[data-side-by-side=true] {
             grid-template-columns: 1fr 1fr;
         }
-
         .session {
             contain: layout;
             position: relative;
             height: var(--session-height);
         }
-
         .shutter {
             z-index: 5;
             pointer-events: none;
@@ -172,7 +164,6 @@
             top: 0;
             bottom: 0;
         }
-
         .session .jobs {
             overflow-y: scroll;
             will-change: transform;
@@ -181,11 +172,9 @@
             flex-direction: column-reverse;
             height: calc(calc(var(--session-height) - var(--prompt-height)) - var(--footer-height));
         }
-
         .session[data-status=in-progress] .jobs {
             height: calc(var(--session-height) - var(--footer-height));
         }
-
         .output-cut {
             --height: calc(var(--font-size) * 2.6);
             position: relative;
@@ -196,29 +185,24 @@
             text-align: center;
             cursor: pointer;
         }
-
         .job {
             padding: var(--content-padding);
             background-color: var(--job-background-color);
             margin-top: var(--font-size);
         }
-
         .job[data-status=failed] {
             --job-background-color: var(--failed-job-background-color);
         }
-
         .job-header {
             color: var(--job-background-color);
             filter: brightness(260%);
             font-size: var(--prompt-font-size);
             padding-bottom: 3px;
         }
-
         .job-header .job-actions {
             margin-right: 15px;
             text-align: right;
         }
-
         .job-header .job-actions .prettify-toggle {
             text-align: center;
             width: 1em;
@@ -228,25 +212,20 @@
             font-family: FontAwesome;
             color: var(--white-color);
         }
-
         .job-header .job-actions .prettify-toggle[data-enabled=true] {
             color: var(--green-color);
         }
-
         .output {
             white-space: pre-wrap;
             position: relative;
         }
-
         .output[data-buffer-type=normal] {
             contain: paint;
         }
-
         .output[data-screen-mode=light] {
             background-color: var(--white-color);
             color: var(--black-color);
         }
-
         .job[data-status=in-progress] .output[data-buffer-type=alternate] {
             background-color: var(--job-background-color);
             position: absolute;
@@ -256,17 +235,14 @@
             right: var(--content-padding);
             z-index: 4;
         }
-
         .job[data-status=success] .output[data-buffer-type=alternate],
         .job[data-status=failed] .output[data-buffer-type=alternate] {
             zoom: 0.5;
         }
-
         .output .cursor {
             --scrollback-offset: calc(var(--scrollback-size) * var(--letter-height));
             --row-offset: calc(var(--row-index) * var(--letter-height));
             --column-offset: calc(var(--column-index) * var(--letter-width));
-
             position: absolute;
             background-color: var(--white-color);
             opacity: 0.6;
@@ -275,17 +251,14 @@
             height: var(--letter-height);
             width: var(--letter-width);
         }
-
         .output .row {
             height: var(--letter-height);
             width: 100%;
         }
-
         .output .row .char-group {
             display: inline-block;
             height: var(--letter-height);
         }
-
         .session .prompt {
             --prompt-padding: calc(calc(var(--prompt-height) - var(--prompt-font-size)) / 2.5);
             position: absolute;
@@ -299,30 +272,24 @@
             grid-template-areas: "prompt-decoration prompt-content";
             grid-template-columns: calc(var(--prompt-font-size) * 2) auto;
         }
-
         .session .prompt[data-mode=history-search] {
             grid-template-columns: calc(var(--prompt-font-size) * 8) auto;
         }
-
         .session[data-status=in-progress] .prompt {
             opacity: 0;
             pointer-events: none;
         }
-
         .session .prompt:before {
             z-index: 2; /* Without this left pane prompt overlaps right pane prompt. */
             grid-area: prompt-decoration;
             filter: brightness(50%);
         }
-
         .session .prompt[data-mode=normal]:before {
             content: url("../../../images/prompt-decoration.svg");
         }
-
         .session .prompt[data-mode=history-search]:before {
             content: url("../../../images/prompt-history-mode-decoration.svg");
         }
-
         .session .prompt-content {
             grid-area: prompt-content;
             font-size: var(--prompt-font-size);
@@ -331,7 +298,6 @@
             outline: none;
             z-index: 2;
         }
-
         .footer {
             position: absolute;
             z-index: 2;
@@ -342,55 +308,44 @@
             padding: calc(calc(var(--footer-height) - var(--font-size)) / 2) var(--content-padding);
             background-color: #111;
         }
-
         .footer span {
             margin-right: 1.5em;
         }
-
         .footer .present-directory:before {
             font-family: "FontAwesome";
             padding-right: 5px;
             content: "\f114";
         }
-
         .footer .present-directory {
             padding-right: 10px;
         }
-
         .footer .vcs-data:before {
             padding-right: 5px;
             font-family: "FontAwesome";
             content: "\f126";
         }
-
         .footer .vcs-data {
             padding-right: 8px;
         }
-
         .footer .release-component-link {
             cursor: pointer;
             color: var(--green-color);
             float: right;
         }
-
         /* inline styles can't really handle pseudo elements, so they still need classes */
         .jsonTreeParentNode:before {
             content: "\0025B8 \0000a0";
             margin-left: -1.2em;
         }
-
         .jsonTreeParentNode.expanded:before {
             content: "\0025BE \0000a0";
         }
-
         .underlineOnHover:hover {
             text-decoration: underline;
         }
-
         .session .prompt[data-mode=history-search] .suggest-widget {
-            width: 600px !important;
+            width: 500px !important;
         }
-
         /* A workaround for https://github.com/Microsoft/monaco-editor/issues/434 */
         .monaco-editor .suggest-widget.no-icons .icon {
             display: none !important;
@@ -398,14 +353,12 @@
         .monaco-editor .suggest-widget .monaco-list .monaco-list-row {
             padding-left: 5px;
         }
-
         /* Display detail for all suggestions, not only for the focused one. */
         .monaco-editor .suggest-widget .monaco-list .monaco-list-row>.contents>.main>.type-label {
             display: inline !important;
             opacity: .3 !important;
             margin-left: 2em !important;
         }
-
         /* Change info icon color from blue to gray. */
         .monaco-editor .suggest-widget .monaco-list .monaco-list-row>.contents>.main>.readMore {
             background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggMWMtMy44NjUgMC03IDMuMTM1LTcgN3MzLjEzNSA3IDcgNyA3LTMuMTM1IDctNy0zLjEzNS03LTctN3ptMSAxMmgtMnYtN2gydjd6bTAtOGgtMnYtMmgydjJ6IiBmaWxsPSIjRkZGRkZGMzAiLz48cGF0aCBkPSJNNyA2aDJ2N2gtMnYtN3ptMC0xaDJ2LTJoLTJ2MnoiIGZpbGw9IiNGRkZGRkYxMCIvPjwvc3ZnPg==") !important;
@@ -422,4 +375,3 @@
 </script>
 
 </html>
-

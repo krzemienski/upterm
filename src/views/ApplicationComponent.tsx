@@ -1,3 +1,4 @@
+
 import {TabHeaderComponent, Props} from "./TabHeaderComponent";
 import * as React from "react";
 import {ipcRenderer} from "electron";
@@ -8,6 +9,7 @@ import {TabComponent} from "./TabComponent";
 import {SessionID} from "../shell/Session";
 import {services} from "../services";
 import * as _ from "lodash";
+import {NavButtonsComponent} from "./NavButtonsComponent";
 
 type ApplicationState = {
     tabs: Array<{id: number, sessionIDs: SessionID[]; focusedSessionID: SessionID}>;
@@ -69,6 +71,27 @@ export class ApplicationComponent extends React.Component<{}, ApplicationState> 
                 <div className="title-bar">
                     <ul className="tabs">{tabs}</ul>
                     <SearchComponent/>
+                    <NavButtonsComponent
+                        minimize={(event: React.MouseEvent<HTMLSpanElement>) => {
+                            let window = remote.getCurrentWindow();
+                            event.stopPropagation();
+                            window.minimize();
+                        }}
+                        maximize={(event: React.MouseEvent<HTMLSpanElement>) => {
+                            let window = remote.getCurrentWindow();
+                            event.stopPropagation();
+                            if (window.isMaximized()) {
+                                window.restore();
+                            } else {
+                                window.maximize();
+                            }
+                        }}
+                        close={(event: React.MouseEvent<HTMLSpanElement>) => {
+                            let window = remote.getCurrentWindow();
+                            event.stopPropagation();
+                            window.close();
+                        }}
+                    />
                 </div>
                 {this.state.tabs.map((tabProps, index) =>
                     <TabComponent {...tabProps}
