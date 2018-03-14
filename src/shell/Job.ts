@@ -28,7 +28,7 @@ export class Job extends EmitterWithUniqueID implements TerminalLikeDevice {
 
     async execute(): Promise<void> {
         try {
-            await CommandExecutor.execute(this);
+            CommandExecutor.execute(this);
 
             // Need to wipe out PTY so that we
             // don't keep trying to write to it.
