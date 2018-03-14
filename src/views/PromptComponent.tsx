@@ -1,5 +1,5 @@
-/// <reference path="../../node_modules/monaco-editor/monaco.d.ts" />
 
+/// <reference path="../../node_modules/monaco-editor/monaco.d.ts" />
 import * as _ from "lodash";
 import * as React from "react";
 import {Prompt} from "../shell/Prompt";
@@ -201,6 +201,11 @@ export class PromptComponent extends React.Component<Props, State> {
         this.editor.setValue(value);
         this.editor.setPosition({lineNumber: 1, column: value.length + 1});
         this.prompt.setValue(value);
+        this.focus();
+    }
+
+    insertValueInPlace(value: string): void {
+        this.editor.trigger("keyboard", "type", {text: value});
         this.focus();
     }
 

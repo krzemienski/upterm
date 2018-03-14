@@ -1,3 +1,4 @@
+
 import {Weight, Brightness} from "./Enums";
 import {Stats} from "fs";
 import {ReactElement} from "react";
@@ -57,3 +58,5 @@ export interface TerminalLikeDevice {
 }
 
 export type UserEvent = KeyboardEvent | ClipboardEvent;
+
+export type MouseEvent = DragEvent;
