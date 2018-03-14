@@ -1,3 +1,4 @@
+
 import {directoryName, escapeFilePath, io, resolveDirectory, userFriendlyPath} from "../../utils/Common";
 import {AutocompletionContext, AutocompletionProvider, FileInfo} from "../../Interfaces";
 import {combine} from "./Combine";
@@ -96,7 +97,7 @@ const filesSuggestions = (filter: (info: FileInfo) => boolean) => async (tokenVa
         .map(info => {
             const escapedName: string = escapeFilePath(info.name);
 
-            if (info.stat.isDirectory()) {
+            if (info.stat.isDirectory() || info.stat.isSymbolicLink()) {
                 return {label: escapedName + "/"};
             } else {
                 return {label: escapedName};
@@ -112,8 +113,8 @@ const filesSuggestionsProvider =
 export const executableFilesSuggestions = filesSuggestions(info => info.stat.isFile() && modeToPermissions(info.stat.mode).execute.owner);
 export const anyFilesSuggestions = filesSuggestions(() => true);
 export const anyFilesSuggestionsProvider = unique(filesSuggestionsProvider(() => true));
-export const directoriesSuggestions = filesSuggestions(info => info.stat.isDirectory());
-export const directoriesSuggestionsProvider = filesSuggestionsProvider(info => info.stat.isDirectory());
+export const directoriesSuggestions = filesSuggestions(info => info.stat.isDirectory() || info.stat.isSymbolicLink());
+export const directoriesSuggestionsProvider = filesSuggestionsProvider(info => info.stat.isDirectory() || info.stat.isSymbolicLink());
 
 export const environmentVariableSuggestions = provide(async context => {
     if (context.argument.value.startsWith("$")) {
